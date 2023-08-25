@@ -21,27 +21,31 @@ class SongViewModel @Inject constructor(
     private val deleteSongUseCase: DeleteSongUseCase
 ) : BaseViewModel() {
 
-    private val mutableStateFlow = MutableStateFlow<UiState<List<SongEntity>>>(UiState.Empty())
-    val getAllSongs: StateFlow<UiState<List<SongEntity>>> = mutableStateFlow
+    private val getMutableStateFlow = MutableStateFlow<UiState<List<SongEntity>>>(UiState.Empty())
+    val getAllSongs: StateFlow<UiState<List<SongEntity>>> = getMutableStateFlow
 
-    private val mutableFlow = MutableStateFlow<UiState<Unit>>(UiState.Empty())
-    val addSong: StateFlow<UiState<Unit>> = mutableFlow
-    val updateSong: StateFlow<UiState<Unit>> = mutableFlow
-    val deleteSong: StateFlow<UiState<Unit>> = mutableFlow
+    private val addMutableSateFlow = MutableStateFlow<UiState<Unit>>(UiState.Empty())
+    val addAllSong: StateFlow<UiState<Unit>> = addMutableSateFlow
+
+    private val updateMutableSateFlow = MutableStateFlow<UiState<Unit>>(UiState.Empty())
+    val updateAllSong: StateFlow<UiState<Unit>> = updateMutableSateFlow
+
+    private val deleteMutableSateFlow = MutableStateFlow<UiState<Unit>>(UiState.Empty())
+    val deleteAllSong: StateFlow<UiState<Unit>> = deleteMutableSateFlow
 
     fun getAllSong(){
-        getSongUseCase.getSong().collectData(mutableStateFlow)
+        getSongUseCase.getSong().collectData(getMutableStateFlow)
     }
 
     fun addSong(song: Song){
-        addSongUseCase.createSong(song).collectData(mutableFlow)
+        addSongUseCase.createSong(song).collectData(addMutableSateFlow)
     }
 
     fun updateSong(song: Song){
-        updateSongUseCase.updateSong(song).collectData(mutableFlow)
+        updateSongUseCase.updateSong(song).collectData(updateMutableSateFlow)
     }
 
     fun deleteSong(song: Song) {
-        deleteSongUseCase.deleteSong(song).collectData(mutableFlow)
+        deleteSongUseCase.deleteSong(song).collectData(deleteMutableSateFlow)
     }
 }

@@ -31,7 +31,7 @@ abstract class BaseActivity: AppCompatActivity() {
                             emptyState.invoke("empty")
                         }
                         is UiState.Success -> {
-                            successState.invoke(it.data)
+                            it.data?.let { it1 -> successState.invoke(it1) }
                         }
                     }
                 }
